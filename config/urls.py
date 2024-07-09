@@ -15,20 +15,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
+
 from rest_framework.routers import DefaultRouter
 
-from members.views import MemberViewSet
 from items.views import ItemViewSet
+from members.views import MemberViewSet
 from orders.views import OrderViewSet
 
-router = DefaultRouter(trailing_slash=False)
-router.register('members', MemberViewSet)
-router.register('items', ItemViewSet)
-router.register('orders', OrderViewSet)
+class OptionalSlashRouter(DefaultRouter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.trailing_slash = '/?'
+
+router = OptionalSlashRouter()
+router.register(r'members', MemberViewSet, basename='member')
+router.register(r'items', ItemViewSet, basename='item')
+router.register(r'orders', OrderViewSet, basename='order')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    
-    path('', include(router.urls))
+
+    path('', include(router.urls)),
 ]

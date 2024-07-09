@@ -10,7 +10,7 @@ class Address(models.Model):
         db_table = 'address'
 
 class Member(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, default="")
     address = models.OneToOneField(Address, on_delete=models.CASCADE, default="")
 
     class Meta:
