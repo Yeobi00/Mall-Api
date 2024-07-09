@@ -1,19 +1,21 @@
 from django.db import models
 
-from items.models import Item
 from members.models import Member
-
-class OrderStatus(models.TextChoices):
-    IN_PROGRESS = 'IPRG', 'In progress'
-    DONE = 'DONE', 'Done'
+from items.models import Item
 
 class Order(models.Model):
+    order_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50, default="배송 중")
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
-    items = models.ManyToManyField(Item, through='OrderItem')
-    ordered_at = models.DateTimeField(auto_now_add=True)
+    items = models.ManyToManyField(Item, through='Order_item')
 
-class OrderItem(models.Model):
+    class Meta:
+        db_table = 'orders'
+
+class Order_item(models.Model):
+    count = models.IntegerField(default=0)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    order_quantity = models.IntegerField()
-    order_status = models.TextField(max_length=50, choices=OrderStatus.choices, default=OrderStatus.IN_PROGRESS)
+
+    class Meta:
+        db_table = 'order_item'
