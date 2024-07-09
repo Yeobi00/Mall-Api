@@ -25,11 +25,7 @@ SECRET_KEY = 'django-insecure-1kyxyapry59jm!ur^+gvn0#w_#j5btdd%ur=cf8r-l9b23zq+n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-<<<<<<< HEAD
 ALLOWED_HOSTS = ['127.0.0.1', '13.237.11.57']
-=======
-ALLOWED_HOSTS = ['mutsa-mall.com', '13.237.11.57', 'localhost', '127.0.0.1']
->>>>>>> 5ab6a6a4b98a025a68fbf808adc647a7253e171b
 
 
 # Application definition
